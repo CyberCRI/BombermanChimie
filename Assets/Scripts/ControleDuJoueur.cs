@@ -5,10 +5,12 @@ public class ControleDuJoueur : MonoBehaviour {
 
 	private Vector3 _inputMovement;
 	public float absoluteMultiplier;
+
+	public int numeroJoueur;
 	
 	// Update is called once per frame
 	void Update () {
-		_inputMovement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);		
+		_inputMovement = new Vector3(Input.GetAxis("Horizontal"+numeroJoueur), Input.GetAxis("Vertical"+numeroJoueur), 0);		
 		//Vector3 moveAmount = _inputMovement * currentMoveSpeed;		
 		//this.rigidbody2D.AddForce(moveAmount);
 
