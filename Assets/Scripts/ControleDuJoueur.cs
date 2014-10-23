@@ -7,11 +7,16 @@ public class ControleDuJoueur : MonoBehaviour {
 	public int numeroJoueur;
 	public GameObject bombeModele;
 	public int reserveDeBombes;
+	public int reserveDeBombesMax;
+	public float tempsPose;
+	public float tempsCreation;
 
 	private Vector3 _inputMovement;
 	private string nomControleHorizontal;
 	private string nomControleVertical;
 	private KeyCode toucheBombe;
+	private float tempsDepuisPose;
+	private float tempsDepuisCreation;
 
 	void Start()
 	{
@@ -26,6 +31,9 @@ public class ControleDuJoueur : MonoBehaviour {
 		{
 			toucheBombe = KeyCode.LeftShift;
 		}
+
+		tempsDepuisPose = Mathf.Infinity;
+		tempsDepuisCreation = Mathf.Infinity;
 	}
 	
 	// Update is called once per frame
@@ -36,11 +44,27 @@ public class ControleDuJoueur : MonoBehaviour {
 
 		this.transform.localPosition += binariserVecteur(_inputMovement)*absoluteMultiplier;
 
-		if(reserveDeBombes > 0 && Input.GetKey(toucheBombe))
+		if(reserveDeBombes > 0 && Input.GetKey(toucheBombe) && (tempsDepuisPose > tempsPose))
 		{
 			GameObject bombe = Instantiate(bombeModele) as GameObject;
 			bombe.transform.localPosition = gameObject.transform.localPosition;
+			tempsDepuisPose = 0;
 			reserveDeBombes--;
+		}
+		else
+		{
+			tempsDepuisPose = tempsDepuisPose + Time.deltaTime;
+		}
+		
+		if(reserveDeBombesMax > reserveDeBombes && tempsDepuisCreation > tempsCreation)
+		{
+			//Creation
+			tempsDepuisCreation = 0;
+			reserveDeBombes++;
+		}
+		else
+		{
+			tempsDepuisCreation = tempsDepuisCreation + Time.deltaTime;
 		}
 	}
 
