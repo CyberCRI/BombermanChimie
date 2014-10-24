@@ -47,7 +47,8 @@ public class ControleDuJoueur : MonoBehaviour {
 		if(reserveDeBombes > 0 && Input.GetKey(toucheBombe) && (tempsDepuisPose > tempsPose))
 		{
 			GameObject bombe = Instantiate(bombeModele) as GameObject;
-			bombe.transform.localPosition = gameObject.transform.localPosition;
+			bombe.transform.parent = transform.parent;
+			bombe.transform.localPosition = transform.localPosition;
 			tempsDepuisPose = 0;
 			reserveDeBombes--;
 		}
